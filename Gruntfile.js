@@ -14,9 +14,9 @@ module.exports = function(grunt) {
     banner += '// Last time updated: <%= grunt.template.today("UTC:yyyy-mm-dd h:MM:ss TT Z") %>\n\n';
 
     banner += '// _______________\n';
-    banner += '// getStats v' + versionNumber + '\n\n';
+    banner += '// @jonz94/getStats v' + versionNumber + '\n\n';
 
-    banner += '// Open-Sourced: https://github.com/muaz-khan/getStats\n\n';
+    banner += '// Fork from https://github.com/muaz-khan/getStats\n\n';
 
     banner += '// --------------------------------------------------\n';
     banner += '// Muaz Khan     - www.MuazKhan.com\n';

@@ -1,13 +1,8 @@
 {
-  "name": "getstats",
+  "name": "@jonz94/getstats",
   "preferGlobal": true,
   "version": "1.2.0",
-  "author": {
-    "name": "Muaz Khan",
-    "email": "muazkh@gmail.com",
-    "url": "https://muazkhan.com/"
-  },
-  "description": "A tiny JavaScript library using WebRTC getStats API to return peer connection stats i.e. bandwidth usage, packets lost, local/remote ip addresses and ports, type of connection etc.",
+  "description": "Fork from https://github.com/manuquentin/getStats",
   "scripts": {
     "start": "node server.js"
   },
@@ -15,7 +10,7 @@
   "types": "./getStats.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/muaz-khan/getStats.git"
+    "url": "https://github.com/jonz94/getStats.git"
   },
   "keywords": [
     "webrtc",
@@ -33,10 +28,10 @@
   "license": "MIT",
   "readmeFilename": "README.md",
   "bugs": {
-    "url": "https://github.com/muaz-khan/getStats/issues",
+    "url": "https://github.com/jonz94/getStats/issues",
     "email": "muazkh@gmail.com"
   },
-  "homepage": "https://www.webrtc-experiment.com/getStats/",
+  "homepage": "https://github.com/jonz94/getStats",
   "_id": "getstats@",
   "_from": "getstats@",
   "tonicExampleFilename": "npm-test.js",

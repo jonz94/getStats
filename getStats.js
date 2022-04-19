@@ -1,11 +1,11 @@
 'use strict';
 
-// Last time updated: 2019-02-20 3:31:29 PM UTC
+// Last time updated: 2022-04-19 10:46:12 PM UTC
 
 // _______________
-// getStats v1.2.0
+// @jonz94/getStats v1.2.0
 
-// Open-Sourced: https://github.com/muaz-khan/getStats
+// Fork from https://github.com/muaz-khan/getStats
 
 // --------------------------------------------------
 // Muaz Khan     - www.MuazKhan.com
@@ -215,7 +215,23 @@ var getStats = function(mediaStreamTrack, callback, interval) {
                 send: {},
                 recv: {}
             },
-            candidates: {}
+            candidates: {},
+            getSendrecvType: function(result) {
+                var sendrecvType = result.id.split('_').pop();
+                if ('isRemote' in result) {
+                    if (result.isRemote === true) {
+                        sendrecvType = 'recv';
+                    }
+                    if (result.isRemote === false) {
+                        sendrecvType = 'send';
+                    }
+                } else {
+                    var direction = result.type.split('-')[0];
+                    sendrecvType = direction === 'outbound' ? 'send' : (direction === 'inbound' ? 'recv' : null);
+                }
+
+                return sendrecvType;
+            },
         },
         nomore: function() {
             nomore = true;
@@ -284,7 +300,7 @@ var getStats = function(mediaStreamTrack, callback, interval) {
             getStatsResult.results = results;
 
             if (getStatsResult.audio && getStatsResult.video) {
-                getStatsResult.bandwidth.speed = (getStatsResult.audio.bytesSent - getStatsResult.bandwidth.helper.audioBytesSent) + (getStatsResult.video.bytesSent - getStatsResult.bandwidth.helper.videoBytesSent);
+                getStatsResult.bandwidth.speed = (((getStatsResult.audio.bytesSent - getStatsResult.bandwidth.helper.audioBytesSent) + (getStatsResult.video.bytesSent - getStatsResult.bandwidth.helper.videoBytesSent)) * 1000) / interval;
                 getStatsResult.bandwidth.helper.audioBytesSent = getStatsResult.audio.bytesSent;
                 getStatsResult.bandwidth.helper.videoBytesSent = getStatsResult.video.bytesSent;
             }
@@ -355,15 +371,9 @@ var getStats = function(mediaStreamTrack, callback, interval) {
     getStatsParser.checkAudioTracks = function(result) {
         if (result.mediaType !== 'audio') return;
 
-        var sendrecvType = result.id.split('_').pop();
-        if (result.isRemote === true) {
-            sendrecvType = 'recv';
-        }
-        if (result.isRemote === false) {
-            sendrecvType = 'send';
-        }
+        var sendrecvType = getStatsResult.internal.getSendrecvType(result);
 
-        if (!sendrecvType) return;
+        if (!sendrecvType || !getStatsResult.audio[sendrecvType]) return;
 
         if (getStatsResult.audio[sendrecvType].codecs.indexOf(result.googCodecName || 'opus') === -1) {
             getStatsResult.audio[sendrecvType].codecs.push(result.googCodecName || 'opus');
@@ -440,15 +450,9 @@ var getStats = function(mediaStreamTrack, callback, interval) {
     getStatsParser.checkVideoTracks = function(result) {
         if (result.mediaType !== 'video') return;
 
-        var sendrecvType = result.id.split('_').pop();
-        if (result.isRemote === true) {
-            sendrecvType = 'recv';
-        }
-        if (result.isRemote === false) {
-            sendrecvType = 'send';
-        }
+        var sendrecvType = getStatsResult.internal.getSendrecvType(result);
 
-        if (!sendrecvType) return;
+        if (!sendrecvType || !getStatsResult.video[sendrecvType]) return;
 
         if (getStatsResult.video[sendrecvType].codecs.indexOf(result.googCodecName || 'VP8') === -1) {
             getStatsResult.video[sendrecvType].codecs.push(result.googCodecName || 'VP8');

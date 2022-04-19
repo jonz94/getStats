@@ -1,4 +1,4 @@
-declare module 'getstats' {
+declare module '@jonz94/getstats' {
   interface GetStatsBandwidth {
     speed: number;
     systemBandwidth: number;
@@ -79,8 +79,8 @@ declare module 'getstats' {
   }
 
   export default function getstats(
-      rtc: RTCPeerConnection,
-      callback: (result: GetStatsResult) => void,
-      interval?: number
+    rtc: RTCPeerConnection,
+    callback: (result: GetStatsResult) => void,
+    interval?: number,
   ): void;
 }

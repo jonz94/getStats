@@ -1,9 +1,9 @@
 'use strict';
 
-// Last time updated: 2022-04-19 10:47:04 PM UTC
+// Last time updated: 2022-04-19 10:56:57 PM UTC
 
 // _______________
-// @jonz94/getStats v1.2.0-patch.0
+// @jonz94/getStats v1.2.0-patch.1
 
 // Fork from https://github.com/muaz-khan/getStats
 
